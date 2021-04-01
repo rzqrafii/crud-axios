@@ -6,7 +6,7 @@ export class DaftarProduk extends Component {
 	state = {
 		produk: []
 	};
-	async componentDidMount() {
+	componentDidMount = async () => {
 		// API adalah axios yang sudah di create pada ../axios/Api.js
 		// Link http://localhost/tokoAPI/ .. akan mengambil ambildata.php
 		await API.get("/ambildata.php").then((response) =>
@@ -15,10 +15,17 @@ export class DaftarProduk extends Component {
 			})
 		);
 		console.log(this.state);
-	}
+	};
 	render() {
+		//refresh: ketika ada perubahan / penghapusan data, otomatis data akan terefresh / langsung terganti
 		const renderData = this.state.produk.map((produk) => {
-			return <CardProduk produk={produk} key={produk.id} />;
+			return (
+				<CardProduk
+					produk={produk}
+					key={produk.id}
+					refresh={this.componentDidMount}
+				/>
+			);
 		});
 		return (
 			<div className="container">
